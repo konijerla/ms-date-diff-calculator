@@ -13,8 +13,13 @@ public class DateDifferenceCalculator {
 		Date date2 = createDate(strDate2);
 
 		// Ensure date1 is the earliest date and date2 is the latest date
-		if (date1.compareTo(date2) >= 0) {
-			throw new InvalidDateException("Date 1: '" + strDate1 + "' should be before to Date2: '" + strDate2 + "");
+		if (date1.compareTo(date2) > 0) {
+			Date temp = date1;
+			date1 = date2;	
+			date2 = temp;
+//			throw new InvalidDateException("Date 1: '" + strDate1 + "' should be before to Date2: '" + strDate2 + "");
+			return -1 * date2.daysSince(date1);
+
 		}
 
 		return date2.daysSince(date1);

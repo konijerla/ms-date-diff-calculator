@@ -47,7 +47,7 @@ public class DateDifferenceControllerTests {
 		MvcResult result = mockMvc.perform(get(PATH).content(requestJson) // Valid date
 				.contentType(APPLICATION_JSON_UTF8)).andDo(print()).andExpect(status().isOk()).andReturn();
 
-		assertEquals("Date 1: 02 04 1990, Date 2: 25 12 2020, Difference: 11225 days",
+		assertEquals("02 04 1990, 25 12 2020, Difference: 11225 days",
 				result.getResponse().getContentAsString());
 
 	}
@@ -90,11 +90,13 @@ public class DateDifferenceControllerTests {
 		ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
 		String requestJson = ow.writeValueAsString(object);
 
-		MvcResult result = mockMvc.perform(get(PATH).content(requestJson) // first date is later to second date
-				.contentType(APPLICATION_JSON_UTF8)).andDo(print()).andExpect(status().isBadRequest())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.message").exists()).andReturn();
-		assertTrue(result.getResponse().getContentAsString().contains(
-				"Date 1: '26 12 2020' should be before to Date2: '25 12 2020"));
+		
+		MvcResult result = mockMvc.perform(get(PATH).content(requestJson) // Valid date
+				.contentType(APPLICATION_JSON_UTF8)).andDo(print()).andExpect(status().isOk()).andReturn();
+
+		assertEquals("25 12 2020, 26 12 2020, Difference: 1 days",
+				result.getResponse().getContentAsString());
+		
 	}
 	
 	@Test

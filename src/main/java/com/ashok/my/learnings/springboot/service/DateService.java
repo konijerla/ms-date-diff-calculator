@@ -17,8 +17,9 @@ public class DateService {
 	}
 
 	public String calculateDateDifference(RequestObject input) {
-		return "Date 1: " + input.getDate1() + ", Date 2: " + input.getDate2() + ", Difference: "
-				+ calculator.calculateDifference(input.getDate1(), input.getDate2()) + " days";
+		long difference = calculator.calculateDifference(input.getDate1(), input.getDate2());
+		return difference > 0 ? input.getDate1() + ", " + input.getDate2() + ", Difference: " + difference + " days"
+				: input.getDate2() + ", " + input.getDate1() + ", Difference: " + Math.abs(difference) + " days";
 
 	}
 
