@@ -44,17 +44,25 @@ public class TestDateDifferenceCalculator {
 	public void testSamedDatesCalculateDifference() {
 		String date1 = "12 12 2019";
 		String date2 = date1;
-		Assertions.assertThrows(InvalidDateException.class, () -> {
-			calculator.calculateDifference(date1, date2);
-		});
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
+		LocalDate localDate1 = LocalDate.parse(date1, formatter);
+		LocalDate localDate2 = LocalDate.parse(date2, formatter);
+		long expectedDiff = localDate1.toEpochDay() - localDate2.toEpochDay();
+		
+		long actualDiff = calculator.calculateDifference(date1, date2);
+		assertTrue(expectedDiff == actualDiff);
 	}
 	
 	@Test
 	public void testFirstIsLaterToSecondCalculateDifference() {
 		String date1 = "12 12 2019";
 		String date2 = "12 12 2018";
-		Assertions.assertThrows(InvalidDateException.class, () -> {
-			calculator.calculateDifference(date1, date2);
-		});
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
+		LocalDate localDate1 = LocalDate.parse(date1, formatter);
+		LocalDate localDate2 = LocalDate.parse(date2, formatter);
+		long expectedDiff = Math.abs(localDate1.toEpochDay() - localDate2.toEpochDay());
+		
+		long actualDiff = Math.abs(calculator.calculateDifference(date1, date2));
+		assertTrue(expectedDiff == actualDiff);
 	}
 }

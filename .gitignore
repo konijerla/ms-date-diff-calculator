@@ -27,3 +27,4 @@ local.properties
 *.launch
 */build/*
 build
+/.gradle/
